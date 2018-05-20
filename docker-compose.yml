@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo
+    # internal hostname
+    hostname: mymongo
+
+    ports:
+      - 27017:27017
+
+    environment:
+      - MONGO_INITDB_DATABASE=music
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      # seeding scripts
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      # named volumes
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+
+  mongoclient:
+    # build will get tagged with 'image'
+    build: ./my-mongoclient
+    image: my-mongoclient
+
+    # link back to mongoDB server
+    links:
+      - mongo:targetmongo
+    environment:
+      - MONGO_INITDB_DATABASE=music
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    
+
+volumes:
+  # default dir /var/lib/docker/volumes
+  mongodb:
+  mongoconfig:
