@@ -1,4 +1,4 @@
 FROM alpine
 RUN apk update &&\
   apk add mongodb
-CMD ["/bin/sh"]
+CMD ["/bin/sleep","1d"]
