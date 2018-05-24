@@ -1,13 +1,13 @@
 print('===============JAVASCRIPT===============');
-print('Count of rows in music collection: ' + db.music.count());
+print('Count of rows in test collection: ' + db.test.count());
 
-db.music.insert({ myfield: 'test1', anotherfield: 'TEST1' });
-db.music.insert({ myfield: 'test2', anotherfield: 'TEST2' });
+db.test.insert({ myfield: 'test1', anotherfield: 'TEST1' });
+db.test.insert({ myfield: 'test2', anotherfield: 'TEST2' });
 
 print('===============AFTER JS INSERT==========');
-print('Count of rows in music collection: ' + db.music.count());
+print('Count of rows in test collection: ' + db.test.count());
 
-allmusic = db.music.find();
-while (allmusic.hasNext()) {
-  printjson(allmusic.next());
+alltest = db.test.find();
+while (alltest.hasNext()) {
+  printjson(alltest.next());
 }

@@ -1,16 +1,15 @@
-version: '3'
+version: '3.6'
+# https://docs.docker.com/compose/compose-file/
 
 services:
   mongo:
     image: mongo
-    # internal hostname
-    hostname: mymongo
-
+    hostname: my-mongodb
+    container_name: my-mongodb
     ports:
       - 27017:27017
-
     environment:
-      - MONGO_INITDB_DATABASE=music
+      - MONGO_INITDB_DATABASE=test
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
     volumes:
@@ -19,22 +18,27 @@ services:
       # named volumes
       - mongodb:/data/db
       - mongoconfig:/data/configdb
+    networks:
+      - mongo_net
 
   mongoclient:
     # build will get tagged with 'image'
     build: ./my-mongoclient
     image: my-mongoclient
-
-    # link back to mongoDB server
-    links:
-      - mongo:targetmongo
+    container_name: my-mongoclient
     environment:
-      - MONGO_INITDB_DATABASE=music
+      - MONGO_SERVER=my-mongodb
+      - MONGO_INITDB_DATABASE=test
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
+    networks:
+      - mongo_net
     
-
 volumes:
-  # default dir /var/lib/docker/volumes
+  # default dir on Ubuntu: /var/lib/docker/volumes
   mongodb:
   mongoconfig:
+
+networks:
+  mongo_net:
+    driver: bridge
