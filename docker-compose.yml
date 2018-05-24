@@ -2,9 +2,8 @@ version: '3.6'
 # https://docs.docker.com/compose/compose-file/
 
 services:
-  mongo:
+  my-mongodb:
     image: mongo
-    hostname: my-mongodb
     container_name: my-mongodb
     ports:
       - 27017:27017
@@ -21,7 +20,7 @@ services:
     networks:
       - mongo_net
 
-  mongoclient:
+  my-mongoclient:
     # build will get tagged with 'image'
     build: ./my-mongoclient
     image: my-mongoclient
