@@ -32,6 +32,8 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=admin
     networks:
       - mongo_net
+    depends_on:
+      - my-mongodb
     
 volumes:
   # default dir on Ubuntu: /var/lib/docker/volumes
