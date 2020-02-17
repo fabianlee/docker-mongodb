@@ -9,7 +9,7 @@ version: '3.6'
 
 services:
   my-mongodb:
-    image: mongo
+    image: mongo:4.2.3-bionic
     container_name: my-mongodb
     ports:
       - 27017:27017
@@ -29,7 +29,7 @@ services:
   my-mongoclient:
     # build will get tagged with 'image'
     build: ./my-mongoclient
-    image: my-mongoclient
+    image: fabianlee/my-mongoclient:3.9
     container_name: my-mongoclient
     environment:
       - MONGO_SERVER=my-mongodb
